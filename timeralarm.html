@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <title>Ashok Alarm</title>
+    </head>
+    <style>
+        h1
+        {
+           
+            color: red;
+        }
+        table
+        {
+         padding: 50px;
+         left: 50%;
+         top: 20%;
+         border-spacing: 60px;
+         text-align: center;
+         
+        }
+        td
+        {
+          
+            font-size: 100px;
+            font-weight: bolder;
+            color:darkviolet;
+        }
+     #setcontent
+     {
+        text-align: center;
+     }
+     #timer
+     {
+            margin-top: 10%;
+			margin-left: 40%;
+     }
+     body
+     {
+        background-image: url("background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+     }
+     label
+     {
+        font-size: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        color: blue;
+     }
+     button {
+  			background-color:green; 
+ 			 border: none;
+  			color:gold;
+  			text-align: center;
+ 			 text-decoration: none;
+ 			 display: inline-block;
+ 			 font-size: 20px;
+			 font-family: 'Times New Roman', Times, serif;
+ 			 margin: 4px 2px;
+  				cursor: pointer;
+				padding: 12px 20px;
+			  border-radius: 12px;
+			  margin-right: 6%;
+			}
+            button:hover
+			{
+				background-color: coral;
+			}
+            #hrs,#min,#sec
+			{
+				background-color: lightgoldenrodyellow;
+  					width: 6%;
+  					padding: 12px 20px;
+                      margin: 8px 0;
+ 					 display: inline-block;
+ 				 border: 1px solid #ccc;
+  					border-radius: 4px;
+  					box-sizing: border-box;
+					 
+					  color:blueviolet;
+					  font-weight: bold;
+					  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+					  font-size: 20px;
+			}
+    </style>
+    <body>
+        
+        <div id="setcontent">
+            <audio id="myAudio">
+                <source src="alarm.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>
+            <h1>Set Timer Below</h1>
+            <lable>Hrs <input type="number" id="hrs"></lable>
+            <lable>Min<input type="number" id="min"></lable>
+            <lable>Sec<input type="number" id="sec"></lable>
+             </BR>
+            </BR>
+             </BR>
+            <button id="start" onclick='timer("hour","minutes","seconds",1);return false'> START</button>
+            <button id="stop" onclick='stop();return false'>STOP</button>
+            <button id="reset" onclick='refresh();return false'>RESET</button>
+            <div id="timer">
+                <table>
+                    <tr>
+                        <td id='hour'>00</td>
+                        <td> : </td>
+                        <td id='minutes'>00</td>
+                        <td> : </td>
+                        <td id='seconds'>00</td>
+                    </tr>
+                </table>
+            </div>          
+        </div>
+          
+        <script>
+            let value1=1;
+            function refresh()
+            {
+                location.reload();
+            }
+            function playaudio()
+            {
+                
+                const music = new Audio('alarm.mp3');
+                music.play();
+                music.loop=true;
+            }
+        
+            function stop()
+            {
+                value1=0;
+            }
+            
+            function timer(hours,minutes,seconds,value2)
+            {
+               value1=value2;
+                let hrs=document.getElementById('hrs').value;
+                let min=document.getElementById('min').value;
+                let sec=document.getElementById('sec').value;
+                if(hrs==0 && min==0 && sec==0)
+                {
+                document.getElementById('sec').value=sec;
+                document.getElementById(seconds).textContent=sec;
+                 playaudio();
+                 return 0;
+                }
+                else if(hours<0 || min <0 || sec<0)
+                {
+                alert('invalid timer please reset');
+                }
+                else
+                {
+                document.getElementById(hours).textContent=hrs;
+                document.getElementById(minutes).textContent=min;
+                document.getElementById(seconds).textContent=sec;
+                sec--;
+                
+                if(hrs==0 && min==0 && sec==0)
+                {
+                   document.getElementById('sec').value=sec;
+                   document.getElementById(seconds).textContent=sec;
+                   playaudio();
+                   return 0;
+                }
+               else if(sec>0)
+                {
+                    document.getElementById('sec').value=sec;
+                }
+                else if(sec<=0 && min>0)
+                {
+                    document.getElementById('sec').value=59;  
+                    document.getElementById('min').value=--min;
+                }
+                else if(sec<=0 && min <=0 && hrs>0 )
+                {
+                   document.getElementById('sec').value=59;  
+                    document.getElementById('min').value=59;
+                    document.getElementById('hrs').value=--hrs;
+                }
+                
+                }
+                setTimeout(function setInterval(){ if(value1!=0){ timer(hours,minutes,seconds,1);}},1000);
+            }
+           
+        </script>
+    </body>
+</html>
+       
